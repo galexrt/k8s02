@@ -1,0 +1,42 @@
+---
+# Pre Ansible configuration
+- name: Pre Ansible
+  hosts: all
+  gather_facts: false
+  become: yes
+  roles:
+    - role: galexrt.pre-ansible
+  tags:
+    - pre-ansible
+
+# Hosts pre-deploy configuration
+- name: Pre Deploy
+  hosts: all
+  become: yes
+  roles:
+    - role: galexrt.pre-deploy
+    - role: galexrt.package_update
+  tags:
+    - pre-deploy
+
+- name: Setup timezone and time sync
+  hosts: all
+  roles:
+    - role: ypsman.timedatectl
+      timedatectl_timeservers:
+        - 0.debian.pool.ntp.org
+        - 1.debian.pool.ntp.org
+      timedatectl_timeservers_fallback:
+        - 2.debian.pool.ntp.org
+        - 3.debian.pool.ntp.org
+      timedatectl_timezone: UTC
+
+# kernel-modules and sysctl configuration
+- name: Sysctl and kernel-modules configuration
+  hosts: all
+  become: yes
+  roles:
+    - role: galexrt.kernel-modules
+    - role: galexrt.sysctl
+  tags:
+    - sysctl

@@ -1,0 +1,16 @@
+---
+- src: https://github.com/galexrt/ansible-pre-ansible
+  name: galexrt.pre-ansible
+- src: https://github.com/galexrt/ansible-common-facts
+  name: galexrt.common-facts
+- src: https://github.com/galexrt/ansible-pre-deploy
+  name: galexrt.pre-deploy
+- src: ypsman.timedatectl
+- src: https://github.com/galexrt/ansible-package_update
+  name: galexrt.package_update
+- src: https://github.com/galexrt/ansible-kernel-modules
+  name: galexrt.kernel-modules
+- src: https://github.com/galexrt/ansible-sysctl
+  name: galexrt.sysctl
+- src: https://github.com/galexrt/ansible-post-deploy
+  name: galexrt.post-deploy
