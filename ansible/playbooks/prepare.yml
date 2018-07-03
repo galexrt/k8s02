@@ -24,11 +24,11 @@
   roles:
     - role: ypsman.timedatectl
       timedatectl_timeservers:
-        - 0.debian.pool.ntp.org
-        - 1.debian.pool.ntp.org
+        - ntp1.hetzner.de
+        - ntp2.hetzner.com
       timedatectl_timeservers_fallback:
-        - 2.debian.pool.ntp.org
-        - 3.debian.pool.ntp.org
+        - ntp3.hetzner.net
+        - 0.de.pool.ntp.org
       timedatectl_timezone: UTC
 
 # kernel-modules and sysctl configuration
