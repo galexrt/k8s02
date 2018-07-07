@@ -1,20 +1,18 @@
-GO := go
+all: apply
 
-all: preflight terraform ansible
+init: ## Init terraform for usage.
+	terraform init -input=false
 
-preflight: hcloud-ansible-inv
+plan: init ## Plan infrastructure/terraform operations.
+	terraform plan
 
-hcloud-ansible-inv:
-	$(GO) get -u github.com/thannaske/hcloud-ansible-inv
-	$(GO) install github.com/thannaske/hcloud-ansible-inv/cmd/hcloud-ansible-inv
+apply: init plan ## Apply infrastructure plan.
+	terraform apply
 
-terraform:
-	make -C terraform/ all
-
-ansible:
-	make -C ansible/ all
+destroy: init ## Destroy infrastructure.
+	terraform destroy
 
 help: ## Show this help menu.
 	@grep -E '^[a-zA-Z_-%]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: all terraform ansible help
+.PHONY: all init plan apply destroy help

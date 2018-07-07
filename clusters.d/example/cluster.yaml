@@ -1,0 +1,53 @@
+---
+version: '0'
+metadata:
+  name: example
+spec:
+  config:
+    etcd: # TODO when separate etcd nodes is implemented
+    kubernetes:
+      version: v1.11.0
+      master: # TODO Kubeadm flags and extra flags for master component(s)
+      worker: # TODO Kubeadm flags and extra flags for worker component(s)
+  dns:
+    domain: k8s.moe
+    hostnames:
+      etcd: "k8s02-etcd%d"
+      kubernetes:
+        master: "k8s02-master%d"
+        worker: "k8s02-worker%d"
+      salt:
+        master: "k8s02-salt-master"
+  machines:
+    external: # Machines that are not managable by Saltstack's salt-cloud (Will be saltify!)
+      etcd: # TODO
+      kubernetes:
+        master:
+          - addresses:
+              ipv4: 1.1.1.1
+              ipv6: 2001:db8::/64
+            provider: hcloud
+            parameters:
+              saltMaster: true
+          - addresses:
+              ipv4: 2.2.2.2
+              ipv6: 2001:db8::/64
+            provider: hcloud
+            parameters:
+              saltMaster: true
+          - hostname: master3-hoster1.example.com
+            addresses:
+              ipv4: 3.3.3.3
+              ipv6: 2001:db8::/64
+            provider: hcloud
+            parameters:
+              saltMaster: true
+        worker:
+          - hostname: node1-hoster1.example.com
+            addresses:
+              ipv4: 4.4.4.4
+              ipv6: 2001:db8::/64
+            provider: hcloud
+#        salt:
+#          master:
+#          proxy:

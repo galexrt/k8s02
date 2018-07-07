@@ -3,12 +3,18 @@ Something something Kubernetes.
 
 ## Requirements
 * Terraform
-* Ansible
-* https://github.com/thannaske/hcloud-ansible-inv
+* Salt
 * Golang
     * With `GOPATH` set.
 
-## Terraform
+For help to the targets, run `make help`:
 ```
-terraform -var="hcloud_token=..."
+$ make help
+apply                          Apply infrastructure plan.
+destroy                        Destroy infrastructure.
+help                           Show this help menu.
+init                           Init terraform for usage.
+plan                           Plan infrastructure/terraform operations.
 ```
+
+To use the environment variable for the Hetzner Cloud token use the `TF_VAR_hcloud_token` var.
