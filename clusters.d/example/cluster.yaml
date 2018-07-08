@@ -17,37 +17,43 @@ spec:
         master: "k8s02-master%d"
         worker: "k8s02-worker%d"
       salt:
-        master: "k8s02-salt-master"
+        master: "k8s02-salt-masters"
   machines:
-    external: # Machines that are not managable by Saltstack's salt-cloud (Will be saltify!)
-      etcd: # TODO
-      kubernetes:
-        master:
-          - addresses:
-              ipv4: 1.1.1.1
-              ipv6: 2001:db8::/64
-            provider: hcloud
-            parameters:
-              saltMaster: true
-          - addresses:
-              ipv4: 2.2.2.2
-              ipv6: 2001:db8::/64
-            provider: hcloud
-            parameters:
-              saltMaster: true
-          - hostname: master3-hoster1.example.com
-            addresses:
-              ipv4: 3.3.3.3
-              ipv6: 2001:db8::/64
-            provider: hcloud
-            parameters:
-              saltMaster: true
-        worker:
-          - hostname: node1-hoster1.example.com
-            addresses:
-              ipv4: 4.4.4.4
-              ipv6: 2001:db8::/64
-            provider: hcloud
-#        salt:
-#          master:
-#          proxy:
+    cloud:
+      useTerraforum: true
+      globalParameters:
+        master_count: "1"
+        worker_count: "0"
+      providers: # Array of plattforms with parameters
+        hcloud:
+          parameters:
+            master_instance_type: "cx11"
+    external: # Machines that are not managable by Terraform
+      - addresses:
+          ipv4: 1.1.1.1
+          ipv6: 2001:db8::/64
+        roles:
+          etcd: false
+          kubernetes:
+            master: true
+            # a master is also "always" worker (with a taint)
+            #worker: true
+          salt:
+            master: true
+            #proxy: false
+      - addresses:
+          ipv4: 2.2.2.2
+          ipv6: 2001:db8::/64
+        parameters:
+          saltMaster: true
+      - hostname: master3-hoster1.example.com
+        addresses:
+          ipv4: 3.3.3.3
+          ipv6: 2001:db8::/64
+        parameters:
+          saltMaster: true
+      - hostname: node1-hoster1.example.com
+        #ssh_key_private: PATH # support per node ssh key(s)
+        addresses:
+          ipv4: 4.4.4.4
+          ipv6: 2001:db8::/64

@@ -10,8 +10,10 @@ base:
     - docker
 {%- endif %}
     - kubernetes-basics
-  'k8s02-master*':
+  'k8s02-salt-master*':
+    - salt-keys
     - salt-master
+  'k8s02-master*':
     - kubernetes-master
   'k8s02-worker*':
     - kubernetes-worker

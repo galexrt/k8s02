@@ -117,8 +117,9 @@ master: k8s02-salt-masters.k8s.moe
 # Custom static grains for this minion can be specified here and used in SLS
 # files just like all other grains. This example sets 4 custom grains, with
 # the 'roles' grain having two values that can be matched against.
-#grains:
-#  roles:
+grains:
+  roles:
+    - kubernetes
 #    - webserver
 #    - memcache
 #  deployment: datacenter4
